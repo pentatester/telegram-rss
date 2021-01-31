@@ -1,8 +1,23 @@
 [tool.poetry]
-name = "github-poetry-starter"
-version = "0.2.0"
-description = "GitHub Actions starter for python with python-poetry"
+name = "telegram-rss"
+version = "0.1.0"
+description = "Fetch rss and send the latest update to telegram."
 authors = ["hexatester <hexatester@protonmail.com>"]
+packages = [
+    { include = "telegram_rss" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Communications :: Chat",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+]
 
 [tool.poetry.dependencies]
 python = "^3.6.1"

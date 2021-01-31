@@ -6,6 +6,9 @@ authors = ["hexatester <hexatester@protonmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6.1"
+feedparser = "^6.0.2"
+requests = "^2.25.1"
+python-telegram-bot = "^13.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

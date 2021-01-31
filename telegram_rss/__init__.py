@@ -1,1 +1,3 @@
-__version__ = '0.1.0'
+#!/usr/bin/env python
+
+from .version import __version__  # NOQA

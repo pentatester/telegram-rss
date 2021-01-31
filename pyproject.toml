@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "github-poetry-starter"
+version = "0.2.0"
+description = "GitHub Actions starter for python with python-poetry"
+authors = ["hexatester <hexatester@protonmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+build-backend = 'setuptools.build_meta'
+requires = [
+    'setuptools',
+    'toml',
+]

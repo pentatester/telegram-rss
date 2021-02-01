@@ -26,6 +26,7 @@ requests = "^2.25.1"
 python-telegram-bot = "^13.1"
 attrs = "^20.3.0"
 toml = "^0.10.2"
+click = "^7.1.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

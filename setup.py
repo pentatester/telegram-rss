@@ -46,6 +46,7 @@ def get_requirements():
 
     return requirements_list
 
+
 def get_setup_kwargs(default=None):
     """Get setup kwargs"""
     with open(README_FILE, 'r', encoding='utf-8') as fd:

@@ -20,7 +20,7 @@ class Feed(MutableSequence[Entry]):
         if isinstance(self.channel, Channel):
             pass
         else:
-            raise ValueError(f"item should be either dict or Channel instance")
+            raise ValueError("item should be either dict or Channel instance")
 
         items: List[Entry] = list()
         for item in self.items:
@@ -37,7 +37,7 @@ class Feed(MutableSequence[Entry]):
                 items.append(item)
             else:
                 raise ValueError(
-                    f"item in items should be either dict or Entry instance"
+                    "item in items should be either dict or Entry instance"
                 )
         self.items = items
         self.data = items

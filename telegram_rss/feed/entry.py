@@ -14,10 +14,6 @@ class Entry:
         self.description = sanitize_text(self.description)
 
     def __str__(self):
-        return self.title
-
-    @property
-    def text(self) -> str:
         text = f'<a href="{self.link}">{self.title}</a>\n'
         text += self.description
         return text

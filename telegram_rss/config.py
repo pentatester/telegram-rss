@@ -7,9 +7,13 @@ from telegram_rss.utils import get_default_directory as _get_default_directory
 
 
 @attr.dataclass
-class Rss:
-    title: str
+class FeedConfig:
+    name: str
     source: str
+    cache: Optional[str] = None
+
+    def __str__(self):
+        return self.name
 
 
 @attr.dataclass
@@ -19,16 +23,16 @@ class Config:
     config_dir: str = _get_default_directory()
     users: List[int] = attr.ib(factory=list)
     channels: List[int] = attr.ib(factory=list)
-    rss: List[Rss] = attr.ib(factory=list)
+    feeds: List[FeedConfig] = attr.ib(factory=list)
 
     def __attr_post_init__(self) -> None:
-        new_rss: List[Rss] = list()
-        for rss in self.rss:
-            if isinstance(rss, Rss):
+        new_rss: List[FeedConfig] = list()
+        for rss in self.feeds:
+            if isinstance(rss, FeedConfig):
                 new_rss.append(rss)
             elif isinstance(rss, dict):
-                new_rss.append(**rss)
-        self.rss = new_rss
+                new_rss.append(FeedConfig(**rss))
+        self.feeds = new_rss
 
     @property
     def token(self) -> str:

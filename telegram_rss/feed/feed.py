@@ -11,7 +11,36 @@ class Feed(MutableSequence[Entry]):
     items: List[Entry] = attr.ib(factory=list)
 
     def __attr_post_init__(self) -> None:
-        self.data = self.items
+        if isinstance(self.channel, dict):
+            self.channel = Channel(
+                title=self.channel["title"],
+                link=self.channel["link"],
+                description=self.channel["description"],
+            )
+        if isinstance(self.channel, Channel):
+            pass
+        else:
+            raise ValueError(f"item should be either dict or Channel instance")
+
+        items: List[Entry] = list()
+        for item in self.items:
+            if isinstance(item, dict):
+                items.append(
+                    Entry(
+                        title=item["title"],
+                        link=item["link"],
+                        description=item["description"],
+                        author=item["author"],
+                    )
+                )
+            elif isinstance(item, Entry):
+                items.append(item)
+            else:
+                raise ValueError(
+                    f"item in items should be either dict or Entry instance"
+                )
+        self.items = items
+        self.data = items
 
     def __contains__(self, item):
         return item in self.data

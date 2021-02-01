@@ -4,6 +4,7 @@ import toml
 from typing import List, Optional
 
 from telegram_rss.utils import get_default_directory as _get_default_directory
+from telegram_rss.utils import save_as
 
 
 @attr.dataclass
@@ -56,7 +57,7 @@ class Config:
     def read(cls, directory: Optional[str] = None) -> "Config":
         config_file = cls._config_file(directory)
         if not os.path.isfile(config_file):
-            cls.create(config_file)
+            cls._create(config_file)
             print(f"Please edit the configuration file at {config_file}")
             exit()
         configs = toml.load(config_file)
@@ -64,10 +65,11 @@ class Config:
         return cls(**configs)  # type: ignore
 
     @classmethod
-    def create(cls, directory: Optional[str] = None) -> "Config":
+    def _create(cls, directory: Optional[str] = None) -> "Config":
         config_file = cls._config_file(directory)
         config = Config(config_dir=config_file)
         configs = attr.asdict(config, recurse=True)
+        save_as(configs, config_file)
         return config
 
     @classmethod
@@ -79,8 +81,7 @@ class Config:
     def save(self, directory: Optional[str] = None):
         configs = attr.asdict(self, recurse=True)
         config_file = self._config_file(directory)
-        with open(config_file, 'w') as c_file:
-            toml.dump(configs, c_file)
+        save_as(configs, config_file)
 
     def __del__(self):
         return self.save(self.config_dir)

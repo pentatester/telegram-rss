@@ -1,4 +1,4 @@
-from github_poetry_starter import __version__
+from telegram_rss import __version__
 
 
 def test_version():

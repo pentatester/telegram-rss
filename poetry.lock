@@ -498,7 +498,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
@@ -593,7 +593,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6.1"
-content-hash = "4581839f2967f1718ee79885d35873fbe4cae8da6238c882456d755571ef86fe"
+content-hash = "d6dec3e40986bbd29efae40f46c632574a0e25dafcf5a3daa42c72e287096966"
 
 [metadata.files]
 appdirs = [

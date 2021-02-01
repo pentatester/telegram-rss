@@ -2,10 +2,12 @@ from telegram.ext import CommandHandler
 from telegram.ext import Dispatcher
 
 from .start import command as start_command
+from .update import command as update_command
 
 
 COMMANDS = [
     start_command,
+    update_command,
 ]
 
 

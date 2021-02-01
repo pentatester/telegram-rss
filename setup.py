@@ -26,6 +26,7 @@ SETUP_KWARGS = [
     'extras_require',
     'include_package_data',
     'python_requires',
+    'entry_points',
 ]
 INCLUDE = ['pyproject.toml', 'init.py']
 EXCLUDE_PACKAGE = ['tests*']

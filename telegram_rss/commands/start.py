@@ -2,7 +2,7 @@ from telegram import Update
 from telegram.ext import CallbackContext, CommandHandler
 
 
-def start(update: Update, context: CallbackContext):
+def start_handler(update: Update, context: CallbackContext):
     if not update.effective_message or not update.effective_user:
         return
     update.effective_message.reply_text(
@@ -10,4 +10,4 @@ def start(update: Update, context: CallbackContext):
     )
 
 
-command = CommandHandler("start", start)  # type: ignore
+command = CommandHandler("start", start_handler)  # type: ignore

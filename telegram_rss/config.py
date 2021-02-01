@@ -75,3 +75,12 @@ class Config:
         if directory and not directory.endswith(".toml"):
             directory = os.path.join(directory, name)
         return directory or os.path.join(cls.get_default_directory(), name)
+
+    def save(self, directory: Optional[str] = None):
+        configs = attr.asdict(self, recurse=True)
+        config_file = self._config_file(directory)
+        with open(config_file, 'w') as c_file:
+            toml.dump(configs, c_file)
+
+    def __del__(self):
+        return self.save(self.config_dir)

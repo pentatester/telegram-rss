@@ -2,10 +2,12 @@
 import click
 import logging
 import sys
+from telegram import Bot
 from telegram.ext import Updater
 
 from telegram_rss.config import Config
 from telegram_rss.commands import register_commands
+from telegram_rss.telegram import send_update
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -20,6 +22,13 @@ class Context(click.Context):
 @click.pass_context
 def cli(ctx: Context):
     ctx.ensure_object(Config)
+
+
+@cli.command("update")
+@click.pass_context
+def update(ctx: Context):
+    bot = Bot(token=ctx.obj.token)
+    send_update(bot=bot, config=ctx.obj)
 
 
 @cli.command("polling")

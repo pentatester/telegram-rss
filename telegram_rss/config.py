@@ -44,6 +44,11 @@ class Config:
     get_default_directory = staticmethod(_get_default_directory)
 
     @classmethod
+    def exist(cls, directory: Optional[str] = None) -> bool:
+        filepath = cls._config_file(directory)
+        return os.path.isfile(filepath)
+
+    @classmethod
     def read(cls, directory: Optional[str] = None) -> "Config":
         config_file = cls._config_file(directory)
         if not os.path.isfile(config_file):

@@ -1,4 +1,7 @@
 import os
+from bleach import clean as clean_html
+
+ALLOWED_TAGS = ["b", "i", "u", "s", "a", "code", "pre"]
 
 
 def get_default_directory() -> str:
@@ -7,3 +10,7 @@ def get_default_directory() -> str:
         "telegram-rss",
     )
     return os.path.realpath(ret)
+
+
+def sanitize_text(text: str) -> str:
+    return clean_html(text, tags=ALLOWED_TAGS)

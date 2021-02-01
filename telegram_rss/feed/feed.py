@@ -1,5 +1,6 @@
 import attr
 from collections import UserList
+from feedparser import FeedParserDict
 from typing import List, MutableSequence
 
 from . import Entry, Channel
@@ -41,6 +42,10 @@ class Feed(MutableSequence[Entry]):
                 )
         self.items = items
         self.data = items
+
+    @classmethod
+    def from_feedparser(cls, feed: FeedParserDict) -> "Feed":
+        return cls(channel=feed["channel"], items=feed["items"])
 
     def __contains__(self, item):
         return item in self.data

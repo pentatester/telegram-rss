@@ -54,6 +54,7 @@ def get_setup_kwargs(default=None):
             install_requires=get_requirements(),
             include=INCLUDE,
             packages=find_packages(exclude=EXCLUDE_PACKAGE),
+            entry_points={'console_scripts': ['telegram-rss=telegram_rss.main:main']},
         )
 
     if isinstance(default, dict):

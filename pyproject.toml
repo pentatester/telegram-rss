@@ -18,7 +18,6 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
 ]
-entry_points={'console_scripts': ['telegram-rss=telegram_rss.main:main']},
 
 [tool.poetry.dependencies]
 python = "^3.6.1"

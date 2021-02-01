@@ -2,16 +2,19 @@ import os
 import json
 import toml
 from bleach import clean as clean_html
+from pathlib import Path
 
 ALLOWED_TAGS = ["b", "i", "u", "s", "a", "code", "pre"]
 
 
-def get_default_directory() -> str:
+def get_default_directory(*args: str) -> str:
     ret = os.environ.get("TELEGRAM_RSS_HOME") or os.path.join(
         os.environ.get("XDG_CACHE_HOME") or os.path.expanduser("~/.cache"),
         "telegram-rss",
     )
-    return os.path.realpath(ret)
+    folders = os.path.join(os.path.realpath(ret), *args)
+    Path(folders).mkdir(parents=True, exist_ok=True)
+    return folders
 
 
 def sanitize_text(text: str) -> str:
@@ -19,11 +22,11 @@ def sanitize_text(text: str) -> str:
 
 
 def save_as(data: dict, filepath: str):
-    if filepath.endswith('.json'):
-        with open(filepath, 'w') as f:
+    if filepath.endswith(".json"):
+        with open(filepath, "w") as f:
             json.dump(data, f)
-    if filepath.endswith('.toml'):
-        with open(filepath, 'w') as f:
+    if filepath.endswith(".toml"):
+        with open(filepath, "w") as f:
             toml.dump(data, f)
     else:
         raise ValueError(f"{filepath} should be *.json or *.toml")

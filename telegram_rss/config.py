@@ -22,6 +22,7 @@ class Config:
     bot_token: Optional[str] = None
     env_token: str = "TOKEN"
     config_dir: str = _get_default_directory()
+    data_dir: str = _get_default_directory("data")
     users: List[int] = attr.ib(factory=list)
     channels: List[int] = attr.ib(factory=list)
     feeds: List[FeedConfig] = attr.ib(factory=list)

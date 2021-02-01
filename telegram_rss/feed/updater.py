@@ -3,7 +3,6 @@ import os
 import toml
 
 from feedparser import parse as parse_feed
-from feedparser import FeedParserDict
 from typing import List
 
 from telegram_rss.config import Config, FeedConfig

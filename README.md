@@ -3,9 +3,10 @@
 [![PyPi Package Version](https://img.shields.io/pypi/v/telegram-rss)](https://pypi.org/project/telegram-rss/)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/telegram-rss)](https://pypi.org/project/telegram-rss/)
 [![LICENSE](https://img.shields.io/github/license/pentatester/telegram-rss)](https://github.com/pentatester/telegram-rss/blob/master/LICENSE)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![Mypy](https://img.shields.io/badge/Mypy-enabled-brightgreen)](https://github.com/python/mypy)
 
-Fetch rss and send the latest update to telegram. **This module is still in active development**
+Fetch rss and send the latest update to telegram. **This project is still in active development**
 
 ## Usage
 
@@ -20,9 +21,9 @@ Fetch rss and send the latest update to telegram. **This module is still in acti
 
 If your system support entry_points, you can execute `python -m telegram_rss` with `telegram-rss`.
 
-## Sending update
+## Checking update
 
-Run `python -m telegram_rss update` to check and send the latest
+Run `python -m telegram_rss update` to check and send the latest feeds
 
 ## Example config
 

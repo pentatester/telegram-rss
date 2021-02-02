@@ -20,9 +20,7 @@ class FeedUpdater:
             "data",
             f"{self.feed_config.name}" + ext,
         )
-        self.logger = logging.getLogger(
-            f"{self.__class__.__name__}: {feed_config.name}"
-        )
+        self.logger = logging.getLogger(feed_config.name)
 
     def __call__(self, save: bool = True) -> List[Entry]:
         return self.get_new_entries(save=save)

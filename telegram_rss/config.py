@@ -1,10 +1,13 @@
 import attr
+import logging
 import os
 import toml
 from typing import List, Optional
 
 from telegram_rss.utils import get_default_directory as _get_default_directory
 from telegram_rss.utils import save_as
+
+logger = logging.getLogger(__name__)
 
 
 @attr.dataclass
@@ -19,7 +22,7 @@ class FeedConfig:
 
 @attr.dataclass
 class Config:
-    bot_token: Optional[str] = None
+    bot_token: str = ''
     env_token: str = "TOKEN"
     config_dir: str = _get_default_directory()
     data_dir: str = _get_default_directory("data")
@@ -27,7 +30,7 @@ class Config:
     channels: List[int] = attr.ib(factory=list)
     feeds: List[FeedConfig] = attr.ib(factory=list)
 
-    def __attr_post_init__(self) -> None:
+    def __attrs_post_init__(self) -> None:
         new_rss: List[FeedConfig] = list()
         for rss in self.feeds:
             if isinstance(rss, FeedConfig):
@@ -35,16 +38,17 @@ class Config:
             elif isinstance(rss, dict):
                 new_rss.append(FeedConfig(**rss))
         self.feeds = new_rss
+        logger.debug(f"Loaded config {self}")
 
     @property
     def token(self) -> str:
-        if self.token:
-            return self.token
+        if self.bot_token:
+            return self.bot_token
         elif self.env_token:
             return os.environ.get(self.env_token, "")
         else:
             raise ValueError(
-                f"either token or env_token must be filled in the config ({self.config_dir})"
+                f"either bot_token or env_token must be filled in the config ({self.config_dir})"
             )
 
     get_default_directory = staticmethod(_get_default_directory)

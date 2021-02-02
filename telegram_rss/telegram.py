@@ -40,6 +40,7 @@ def send_message(
         message = make_message(
             entry=entry,
             title=channel.title if channel else config.name,
+            footer_link=config.footer_link,
         )
     else:
         message = str(entry)

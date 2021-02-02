@@ -43,11 +43,14 @@ class FeedUpdater:
     def feed(self) -> Feed:
         if self._feed:
             return self._feed
-        raw_feed = parse_feed(
-            self.feed_config.source,
-            etag=self.feed_config.etag,
-            modified=self.feed_config.modified,
-        )
+        if self.feed_config.save_bandwith:
+            raw_feed = parse_feed(
+                self.feed_config.source,
+                etag=self.feed_config.etag,
+                modified=self.feed_config.modified,
+            )
+        else:
+            raw_feed = parse_feed(self.feed_config.source)
         if raw_feed.status == 304:
             return Feed()
         self.feed_config.etag = raw_feed.etag

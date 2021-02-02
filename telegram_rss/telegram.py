@@ -28,7 +28,7 @@ def send_message(
 
     message = str(entry)
     if config.author_text:
-        message += f"\n{config.author_text}: {entry.author}"
+        message += f"\n<i>{config.author_text}</i>: {entry.author}"
     if feed_config.footer:
         title = feed_config.footer_name or (
             updater.channel.title if updater.channel else feed_config.name

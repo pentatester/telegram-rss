@@ -11,6 +11,11 @@ from telegram_rss.utils import save_as
 
 logger = logging.getLogger(__name__)
 
+TEMPLATE_DATA = {
+    "author": "Author",
+    "source": "Source",
+}
+
 
 @attr.dataclass
 class FeedConfig:
@@ -38,6 +43,7 @@ class Config:
     template_file: Optional[str] = None
     config_dir: str = _get_default_directory()
     data_dir: str = _get_default_directory("data")
+    template_data: dict = attr.ib(default=TEMPLATE_DATA)
     users: List[int] = attr.ib(factory=list)
     channels: List[int] = attr.ib(factory=list)
     feeds: List[FeedConfig] = attr.ib(factory=list)

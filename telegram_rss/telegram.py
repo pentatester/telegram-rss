@@ -29,6 +29,7 @@ def send_message(
     message = config.template.render(
         entry=entry,
         channel=updater.channel,
+        **config.template_data,
     )
 
     if read_more:

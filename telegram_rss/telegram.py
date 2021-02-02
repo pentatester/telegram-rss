@@ -1,24 +1,12 @@
 import logging
 from telegram import Bot, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
 from time import sleep
-from typing import List, Optional
+from typing import List
 
 from telegram_rss.config import Config, FeedConfig
-from telegram_rss.feed import Entry, Channel, FeedUpdater
+from telegram_rss.feed import Entry, FeedUpdater
 
 logger = logging.getLogger(__name__)
-
-
-def make_message(
-    entry: Entry,
-    title: Optional[str] = None,
-    footer_link: Optional[str] = None,
-) -> str:
-    if title:
-        if footer_link:
-            title = f'<a href="{footer_link}">{title}</a>'
-        return str(entry) + "\n" + f"<i>Channel</i>: {title}"
-    return str(entry)
 
 
 def make_reply_markup(text: str, link: str):
@@ -30,20 +18,22 @@ def send_message(
     bot: Bot,
     entry: Entry,
     chat_ids: List[int],
-    config: FeedConfig,
-    channel: Optional[Channel] = None,
-    delay: float = 0.05,
-    web_page_preview: bool = True,
-    read_more: Optional[str] = None,
+    updater: FeedUpdater,
+    config: Config,
+    feed_config: FeedConfig,
+    message_delay: float,
 ):
-    if config.footer:
-        message = make_message(
-            entry=entry,
-            title=channel.title if channel else config.name,
-            footer_link=config.footer_link,
-        )
+    read_more = feed_config.read_more_button or config.read_more_button
+    web_page_preview = feed_config.web_page_preview or config.web_page_preview
+
+    if feed_config.footer:
+        title = feed_config.footer_name or entry.title
+        if feed_config.footer_link:
+            title = f'<a href="{feed_config.footer_link}">{title}</a>'
+        message = str(entry) + "\n" + f"<i>{config.channel_text}</i>: {title}"
     else:
         message = str(entry)
+
     if read_more:
         reply_markup = make_reply_markup(read_more, entry.link)
     else:
@@ -56,29 +46,27 @@ def send_message(
             reply_markup=reply_markup,
             disable_web_page_preview=not web_page_preview,
         )
-        sleep(delay)
+        sleep(message_delay)
 
 
 def send_update(bot: Bot, config: Config):
     chat_ids = config.channels + config.users
     for feed_config in config.feeds:
+        message_delay = feed_config.message_delay or config.message_delay
         updater = FeedUpdater(feed_config)
         entries = updater.get_new_entries()
         if not entries:
             continue
         entries.reverse()
 
-        message_delay = feed_config.message_delay or config.message_delay
-        read_more_button = feed_config.read_more_button or config.read_more_button
-
         for entry in entries:
             send_message(
                 bot=bot,
                 entry=entry,
                 chat_ids=chat_ids,
-                channel=updater.channel,
-                config=feed_config,
-                delay=message_delay,
-                read_more=read_more_button,
+                updater=updater,
+                config=config,
+                feed_config=feed_config,
+                message_delay=message_delay,
             )
         sleep(message_delay)

@@ -17,9 +17,6 @@ class FeedConfig:
     name: str
     source: str
     save_bandwith: bool = True
-    footer: bool = True
-    footer_name: Optional[str] = None
-    footer_link: Optional[str] = None
     etag: Optional[str] = None
     modified: Optional[str] = None
     web_page_preview: Optional[bool] = None
@@ -37,9 +34,7 @@ class Config:
     env_token: str = "TOKEN"
     web_page_preview: bool = True
     message_delay: float = 0.05
-    author_text: str = "Author"
     read_more_button: str = "Read more..."
-    channel_text: str = "Channel"
     template_file: Optional[str] = None
     config_dir: str = _get_default_directory()
     data_dir: str = _get_default_directory("data")

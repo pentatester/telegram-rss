@@ -2,8 +2,10 @@ import attr
 import logging
 import os
 import toml
+from jinja2 import Template
 from typing import List, Optional
 
+from telegram_rss.template import TEMPLATE
 from telegram_rss.utils import get_default_directory as _get_default_directory
 from telegram_rss.utils import save_as
 
@@ -38,6 +40,7 @@ class Config:
     author_text: str = "Author"
     read_more_button: str = "Read more..."
     channel_text: str = "Channel"
+    template_file: Optional[str] = None
     config_dir: str = _get_default_directory()
     data_dir: str = _get_default_directory("data")
     users: List[int] = attr.ib(factory=list)
@@ -52,7 +55,21 @@ class Config:
             elif isinstance(rss, dict):
                 new_rss.append(FeedConfig(**rss))
         self.feeds = new_rss
+        if not self.template_file or not os.path.isfile(self.template_file):
+            self.template_file = os.path.join(
+                self.get_default_directory(), "template.txt"
+            )
+            with open(self.template_file, "w") as f:
+                f.write(TEMPLATE)
+            self._template = Template(TEMPLATE)
+        else:
+            with open(self.template_file, "r") as f:
+                self._template = Template(f.read())
         logger.debug(f"Loaded config {self}")
+
+    @property
+    def template(self) -> Template:
+        return self._template
 
     @property
     def token(self) -> str:

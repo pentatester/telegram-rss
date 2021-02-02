@@ -9,12 +9,18 @@ Fetch rss and send the latest update to telegram. **This module is still in acti
 
 ## Usage
 
+### Setup
+
 - Make sure you have python installed.
 - Open command line.
 - Install `pip install --upgrade telegram-rss`
 - Run `python -m telegram-rss`
 - Add bot token, feeds, [user's id](#how-to-get-ids), and/or [channel's id](#how-to-get-ids) inside telegram-rss/config.toml
-- Run `python -m telegram-rss` to send the latest
+- Run `python -m telegram-rss update` to send initial update (*personal to send initial update*)
+
+## Sending update
+
+Run `python -m telegram-rss update` to check and send the latest
 
 ## Example config
 

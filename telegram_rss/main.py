@@ -11,8 +11,13 @@ from telegram_rss.telegram import send_update
 
 
 def set_debug(debug: bool):
+    log_format = (
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        if debug
+        else "%(name)s - %(message)s"
+    )
     logging.basicConfig(
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        format=log_format,
         level=logging.DEBUG if debug else logging.INFO,
     )
 

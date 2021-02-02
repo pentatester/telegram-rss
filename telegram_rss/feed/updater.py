@@ -30,12 +30,12 @@ class FeedUpdater:
     def get_new_entries(self, save: bool = True) -> List[Entry]:
         entries: List[Entry] = list()
         if self.feed == self.local_feed:
-            self.logger.debug("No new feeds found")
+            self.logger.info("No new feeds found")
             return entries
         for feed in self.feed:
             if feed not in self.local_feed:
                 entries.append(feed)
-        self.logger.debug(f"Found new {len(entries)} feeds")
+        self.logger.info(f"Found new {len(entries)} feeds")
         if entries and save:
             self.save_feed(self.feed)
             self.logger.debug(f"Saved {len(entries)} as {self.local_file}")

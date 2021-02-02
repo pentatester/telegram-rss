@@ -58,7 +58,7 @@ class Config:
         self.feeds = new_rss
         if not self.template_file or not os.path.isfile(self.template_file):
             self.template_file = os.path.join(
-                self.get_default_directory(), "template.txt"
+                self.get_default_directory(), "template.html"
             )
             with open(self.template_file, "w") as f:
                 f.write(TEMPLATE)

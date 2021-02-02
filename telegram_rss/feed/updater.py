@@ -1,19 +1,17 @@
 import attr
-import codecs
 import logging
 import os
-import toml
 
 from feedparser import parse as parse_feed
 from typing import List, Optional
 
 from telegram_rss.config import FeedConfig
-from telegram_rss.utils import save_as, get_default_directory
-from . import Entry, Feed
+from telegram_rss.utils import save_as, get_default_directory, load_dict
+from . import Entry, Channel, Feed
 
 
 class FeedUpdater:
-    def __init__(self, feed_config: FeedConfig, ext: str = ".toml"):
+    def __init__(self, feed_config: FeedConfig, ext: str = ".json"):
         self.feed_config = feed_config
         self._feed: Optional[Feed] = None
         self._local_feed: Optional[Feed] = None
@@ -57,11 +55,14 @@ class FeedUpdater:
             return self._local_feed
         if not os.path.isfile(self.local_file):
             return Feed()
-        with codecs.open(self.local_file) as f:
-            feed_data = toml.load(f)
+        feed_data = load_dict(self.local_file)
         self._local_feed = Feed(**feed_data)
         return self._local_feed
 
     def save_feed(self, feed: Feed):
         feed_data = attr.asdict(feed, recurse=True)
         save_as(feed_data, self.local_file)
+
+    @property
+    def channel(self) -> Optional[Channel]:
+        return self.feed.channel or self.local_feed.channel

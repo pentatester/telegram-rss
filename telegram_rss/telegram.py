@@ -26,16 +26,10 @@ def send_message(
     read_more = feed_config.read_more_button or config.read_more_button
     web_page_preview = feed_config.web_page_preview or config.web_page_preview
 
-    message = str(entry)
-    if config.author_text:
-        message += f"\n<i>{config.author_text}</i>: {entry.author}"
-    if feed_config.footer:
-        title = feed_config.footer_name or (
-            updater.channel.title if updater.channel else feed_config.name
-        )
-        if feed_config.footer_link:
-            title = f'<a href="{feed_config.footer_link}">{title}</a>'
-        message += "\n" + f"<i>{config.channel_text}</i>: {title}"
+    message = config.template.render(
+        entry=entry,
+        channel=updater.channel,
+    )
 
     if read_more:
         reply_markup = make_reply_markup(read_more, entry.link)

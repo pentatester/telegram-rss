@@ -14,6 +14,9 @@ logger = logging.getLogger(__name__)
 class FeedConfig:
     name: str
     source: str
+    web_page_preview: Optional[bool] = None
+    read_more_button: Optional[str] = None
+    message_delay: Optional[float] = None
     cache: Optional[str] = None
 
     def __str__(self):
@@ -24,7 +27,9 @@ class FeedConfig:
 class Config:
     bot_token: str = ""
     env_token: str = "TOKEN"
+    web_page_preview: bool = True
     message_delay: float = 0.05
+    read_more_button: str = "Read more..."
     config_dir: str = _get_default_directory()
     data_dir: str = _get_default_directory("data")
     users: List[int] = attr.ib(factory=list)

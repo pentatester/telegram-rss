@@ -28,7 +28,7 @@ name = "Feed example online"
 source = "http://feedparser.org/docs/examples/atom10.xml
 [[feeds]]
 name = "Feed example local"
-source = "c:\incoming\atom10.xml"
+source = "c:\\incoming\\atom10.xml"
 ```
 
 ## How to get token

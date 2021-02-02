@@ -26,7 +26,7 @@ def sanitize_text(text: str) -> str:
 def save_as(data: dict, filepath: str):
     if filepath.endswith(".json"):
         with open(filepath, "w") as f:
-            json.dump(data, f)
+            json.dump(data, f, indent=4)
     elif filepath.endswith(".toml"):
         with open(filepath, "w") as f:
             toml.dump(data, f)

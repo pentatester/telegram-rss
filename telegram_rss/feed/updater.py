@@ -1,4 +1,5 @@
 import attr
+import codecs
 import logging
 import os
 import toml
@@ -22,7 +23,7 @@ class FeedUpdater:
             f"{self.feed_config.name}" + ext,
         )
         self.logger = logging.getLogger(
-            f"{self.__class__.__name__} - {feed_config.name}"
+            f"{self.__class__.__name__}: {feed_config.name}"
         )
 
     def __call__(self, save: bool = True) -> List[Entry]:
@@ -31,6 +32,7 @@ class FeedUpdater:
     def get_new_entries(self, save: bool = True) -> List[Entry]:
         entries: List[Entry] = list()
         if self.feed == self.local_feed:
+            self.logger.debug("No new feeds found")
             return entries
         for feed in self.feed:
             if feed not in self.local_feed:
@@ -45,7 +47,8 @@ class FeedUpdater:
     def feed(self) -> Feed:
         if self._feed:
             return self._feed
-        self._feed = Feed.from_feedparser(parse_feed(self.feed_config.source))
+        parsed_feed = parse_feed(self.feed_config.source)
+        self._feed = Feed.from_feedparser(parsed_feed)
         return self._feed
 
     @property
@@ -54,7 +57,8 @@ class FeedUpdater:
             return self._local_feed
         if not os.path.isfile(self.local_file):
             return Feed()
-        feed_data = toml.load(self.local_file)
+        with codecs.open(self.local_file) as f:
+            feed_data = toml.load(f)
         self._local_feed = Feed(**feed_data)
         return self._local_feed
 

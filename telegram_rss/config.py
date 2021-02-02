@@ -14,6 +14,8 @@ logger = logging.getLogger(__name__)
 class FeedConfig:
     name: str
     source: str
+    etag: Optional[str] = None
+    modified: Optional[str] = None
     web_page_preview: Optional[bool] = None
     read_more_button: Optional[str] = None
     message_delay: Optional[float] = None

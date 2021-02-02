@@ -9,9 +9,15 @@ from telegram_rss.feed import Entry, Channel, FeedUpdater
 logger = logging.getLogger(__name__)
 
 
-def make_message(entry: Entry, channel: Optional[Channel] = None) -> str:
-    if channel:
-        return str(entry) + "\n" + f"<i>Channel</i>: {channel.title}"
+def make_message(
+    entry: Entry,
+    title: Optional[str] = None,
+    footer_link: Optional[str] = None,
+) -> str:
+    if title:
+        if footer_link:
+            title = f'<a href="{footer_link}">{title}</a>'
+        return str(entry) + "\n" + f"<i>Channel</i>: {title}"
     return str(entry)
 
 
@@ -30,7 +36,10 @@ def send_message(
     web_page_preview: bool = True,
     read_more: Optional[str] = None,
 ):
-    message = make_message(entry, channel)
+    message = make_message(
+        entry=entry,
+        title=channel.title if channel else config.name,
+    )
     if read_more:
         reply_markup = make_reply_markup(read_more, entry.link)
     else:

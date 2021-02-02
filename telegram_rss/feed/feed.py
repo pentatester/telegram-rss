@@ -47,6 +47,9 @@ class Feed(MutableSequence[Entry]):
     def from_feedparser(cls, feed: FeedParserDict) -> "Feed":
         return cls(channel=feed["channel"], items=feed["items"])
 
+    def __bool__(self):
+        return bool(self.data)
+
     def __contains__(self, item):
         return item in self.data
 

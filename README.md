@@ -35,20 +35,39 @@ channels = [ -123456789,]
 web_page_preview = true
 message_delay = 0.05
 read_more_button = "Read more"
+
 [[feeds]]
 name = "Feed example online"
 source = "http://feedparser.org/docs/examples/atom10.xml"
 footer_link = "http://feedparser.org/docs/"
+
 [[feeds]]
 name = "Feed example local"
 source = "c:\\incoming\\atom10.xml"
 save_bandwith = false
 footer = false
+
+[template_data]
+author = "Author"
+source = "Source"
+
 ```
 
 - Disable web preview in chat by `web_page_preview = false`.
 - If you don't want read_more_button under the message, set `read_more_button = ""`.
 - Don't set message_delay too low, it can be detected as spam.
+
+## Template
+
+`template.html` is loaded using jinja2, [Learn more](https://jinja.palletsprojects.com/en/2.11.x/ "Jinja2 documentation").
+Default template is
+
+```html
+<a href="{{ entry.link }}">{{ entry.safe_title }}</a>
+<i>{{ author }}</i>: <b>{{ entry.author }}</b>
+{{ entry.safe_description }}
+<i>{{ source }}</i>: <a href="{{ channel.link }}">{{ channel.safe_title }}</a>
+```
 
 ## How to get token
 

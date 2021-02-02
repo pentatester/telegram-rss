@@ -27,7 +27,7 @@ class FeedUpdater:
 
     def get_new_entries(self, save: bool = True) -> List[Entry]:
         entries: List[Entry] = list()
-        if self.feed == self.local_feed:
+        if not self.feed or self.feed == self.local_feed:
             self.logger.info("No new feeds found")
             return entries
         for feed in self.feed:
@@ -43,7 +43,13 @@ class FeedUpdater:
     def feed(self) -> Feed:
         if self._feed:
             return self._feed
-        parsed_feed = parse_feed(self.feed_config.source)
+        parsed_feed = parse_feed(
+            self.feed_config.source,
+            etag=self.feed_config.etag,
+            modified=self.feed_config.modified,
+        )
+        if parse_feed.status == 304:
+            return Feed()
         self._feed = Feed.from_feedparser(parsed_feed)
         return self._feed
 

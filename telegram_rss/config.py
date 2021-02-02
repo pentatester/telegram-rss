@@ -16,6 +16,7 @@ class FeedConfig:
     source: str
     save_bandwith: bool = True
     footer: bool = True
+    footer_name: Optional[str] = None
     footer_link: Optional[str] = None
     etag: Optional[str] = None
     modified: Optional[str] = None
@@ -35,6 +36,7 @@ class Config:
     web_page_preview: bool = True
     message_delay: float = 0.05
     read_more_button: str = "Read more..."
+    channel_text: str = "Channel"
     config_dir: str = _get_default_directory()
     data_dir: str = _get_default_directory("data")
     users: List[int] = attr.ib(factory=list)

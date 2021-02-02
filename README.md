@@ -32,13 +32,23 @@ bot_token = "987654321:ASDASDASD-1sda2eas3asd-91sdajh28j"
 env_token = "TOKEN"
 users = [ 123456789,]
 channels = [ -123456789,]
+web_page_preview = true
+message_delay = 0.05
+read_more_button = "Read more"
 [[feeds]]
 name = "Feed example online"
 source = "http://feedparser.org/docs/examples/atom10.xml"
+footer_link = "http://feedparser.org/docs/"
 [[feeds]]
 name = "Feed example local"
 source = "c:\\incoming\\atom10.xml"
+save_bandwith = false
+footer = false
 ```
+
+- Disable web preview in chat by `web_page_preview = false`.
+- If you don't want read_more_button under the message, set `read_more_button = ""`.
+- Don't set message_delay too low, it can be detected as spam.
 
 ## How to get token
 

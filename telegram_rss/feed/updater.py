@@ -48,7 +48,7 @@ class FeedUpdater:
             etag=self.feed_config.etag,
             modified=self.feed_config.modified,
         )
-        if parse_feed.status == 304:
+        if parsed_feed.status == 304:
             return Feed()
         self._feed = Feed.from_feedparser(parsed_feed)
         return self._feed

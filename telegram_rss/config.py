@@ -15,6 +15,7 @@ class FeedConfig:
     name: str
     source: str
     save_bandwith: bool = True
+    footer: bool = True
     footer_link: Optional[str] = None
     etag: Optional[str] = None
     modified: Optional[str] = None

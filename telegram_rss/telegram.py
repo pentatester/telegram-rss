@@ -36,10 +36,13 @@ def send_message(
     web_page_preview: bool = True,
     read_more: Optional[str] = None,
 ):
-    message = make_message(
-        entry=entry,
-        title=channel.title if channel else config.name,
-    )
+    if config.footer:
+        message = make_message(
+            entry=entry,
+            title=channel.title if channel else config.name,
+        )
+    else:
+        message = str(entry)
     if read_more:
         reply_markup = make_reply_markup(read_more, entry.link)
     else:

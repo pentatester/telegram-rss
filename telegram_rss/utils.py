@@ -1,3 +1,4 @@
+import codecs
 import os
 import json
 import toml
@@ -26,8 +27,21 @@ def save_as(data: dict, filepath: str):
     if filepath.endswith(".json"):
         with open(filepath, "w") as f:
             json.dump(data, f)
-    if filepath.endswith(".toml"):
+    elif filepath.endswith(".toml"):
         with open(filepath, "w") as f:
             toml.dump(data, f)
     else:
         raise ValueError(f"{filepath} should be *.json or *.toml")
+
+
+def load_dict(filepath: str):
+    data = None
+    if filepath.endswith(".json"):
+        with codecs.open(filepath) as f:
+            data = json.load(f)
+    elif filepath.endswith(".toml"):
+        with codecs.open(filepath) as f:
+            data = toml.load(f)
+    else:
+        raise ValueError(f"{filepath} should be *.json or *.toml")
+    return data

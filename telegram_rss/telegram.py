@@ -30,7 +30,9 @@ def send_message(
     if config.author_text:
         message += f"\n{config.author_text}: {entry.author}"
     if feed_config.footer:
-        title = feed_config.footer_name or entry.title
+        title = feed_config.footer_name or (
+            updater.channel.title if updater.channel else feed_config.name
+        )
         if feed_config.footer_link:
             title = f'<a href="{feed_config.footer_link}">{title}</a>'
         message += "\n" + f"<i>{config.channel_text}</i>: {title}"

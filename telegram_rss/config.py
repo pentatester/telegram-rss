@@ -35,6 +35,7 @@ class Config:
     env_token: str = "TOKEN"
     web_page_preview: bool = True
     message_delay: float = 0.05
+    author_text: str = "Author"
     read_more_button: str = "Read more..."
     channel_text: str = "Channel"
     config_dir: str = _get_default_directory()

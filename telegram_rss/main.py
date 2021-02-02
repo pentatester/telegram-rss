@@ -4,6 +4,7 @@ import logging
 import sys
 from telegram import Bot
 from telegram.ext import Updater
+from typing import Optional
 
 from telegram_rss.config import Config
 from telegram_rss.commands import register_commands
@@ -37,20 +38,26 @@ def cli(ctx: Context):
 
 @cli.command("update")
 @click.option("--debug/--no-debug", default=False)
+@click.option("--token", default=None, help="Telegram bot token")
 @click.pass_context
-def update(ctx: Context, debug: bool):
+def update(ctx: Context, debug: bool, token: Optional[str] = None):
     set_debug(debug)
     logger.debug("Starting bot")
-    bot = Bot(token=ctx.obj.token)
+    bot = Bot(token=token or ctx.obj.token)
     logger.debug("Sending update only")
     send_update(bot=bot, config=ctx.obj)
 
 
 @cli.command("polling")
+@click.option("--debug/--no-debug", default=False)
+@click.option("--token", default=None, help="Telegram bot token")
 @click.pass_context
-def polling(ctx: Context):
-    updater = Updater(token=ctx.obj.token)
+def polling(ctx: Context, debug: bool, token: Optional[str] = None):
+    set_debug(debug)
+    logger.debug("Starting bot")
+    updater = Updater(token=token or ctx.obj.token)
     updater.dispatcher.bot_data["config"] = ctx.obj
+    logger.debug("Registering commands")
     register_commands(updater.dispatcher)
     updater.start_polling()
 

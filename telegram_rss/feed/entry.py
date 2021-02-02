@@ -9,7 +9,7 @@ class Entry:
     description: str
     author: str
 
-    def __attr_post_init__(self) -> None:
+    def __attrs_post_init__(self) -> None:
         self.title = sanitize_text(self.title)
         self.description = sanitize_text(self.description)
 

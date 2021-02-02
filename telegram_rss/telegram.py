@@ -1,17 +1,23 @@
 import logging
 from telegram import Bot, ParseMode
 from time import sleep
-from typing import List
+from typing import List, Optional
 
 from telegram_rss.config import Config
-from telegram_rss.feed import FeedUpdater
+from telegram_rss.feed import Entry, Channel, FeedUpdater
 
 logger = logging.getLogger(__name__)
 
 
+def make_message(entry: Entry, channel: Optional[Channel] = None) -> str:
+    if channel:
+        return str(entry) + "\n" + f"<i>Channel</i>: {channel.title}"
+    return str(entry)
+
+
 def send_message(bot: Bot, text: str, chat_ids: List[int]):
     for chat_id in chat_ids:
-        bot.send_message(chat_id, str(text), parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id, text, parse_mode=ParseMode.HTML)
         sleep(0.05)
 
 
@@ -22,5 +28,6 @@ def send_update(bot: Bot, config: Config):
         entries = updater.get_new_entries()
         entries.reverse()
         for entry in entries:
-            send_message(bot, str(entry), chat_ids)
+            message = make_message(entry, updater.channel)
+            send_message(bot, message, chat_ids)
         sleep(3.0)

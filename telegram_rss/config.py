@@ -22,8 +22,9 @@ class FeedConfig:
 
 @attr.dataclass
 class Config:
-    bot_token: str = ''
+    bot_token: str = ""
     env_token: str = "TOKEN"
+    message_delay: float = 0.05
     config_dir: str = _get_default_directory()
     data_dir: str = _get_default_directory("data")
     users: List[int] = attr.ib(factory=list)

@@ -15,10 +15,15 @@ def make_message(entry: Entry, channel: Optional[Channel] = None) -> str:
     return str(entry)
 
 
-def send_message(bot: Bot, text: str, chat_ids: List[int]):
+def send_message(
+    bot: Bot,
+    text: str,
+    chat_ids: List[int],
+    delay: float = 0.05,
+):
     for chat_id in chat_ids:
         bot.send_message(chat_id, text, parse_mode=ParseMode.HTML)
-        sleep(0.05)
+        sleep(delay)
 
 
 def send_update(bot: Bot, config: Config):
@@ -29,5 +34,10 @@ def send_update(bot: Bot, config: Config):
         entries.reverse()
         for entry in entries:
             message = make_message(entry, updater.channel)
-            send_message(bot, message, chat_ids)
-        sleep(3.0)
+            send_message(
+                bot=bot,
+                text=message,
+                chat_ids=chat_ids,
+                delay=config.message_delay,
+            )
+        sleep(config.message_delay)

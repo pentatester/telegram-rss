@@ -1,27 +1,27 @@
 import attr
 from collections import UserList
 from feedparser import FeedParserDict
-from typing import List, MutableSequence
+from typing import List, MutableSequence, Optional
 
 from . import Entry, Channel
 
 
 @attr.dataclass
 class Feed(MutableSequence[Entry]):
-    channel: Channel
+    channel: Optional[Channel] = None
     items: List[Entry] = attr.ib(factory=list)
 
-    def __attr_post_init__(self) -> None:
+    def __attrs_post_init__(self) -> None:
         if isinstance(self.channel, dict):
             self.channel = Channel(
                 title=self.channel["title"],
                 link=self.channel["link"],
                 description=self.channel["description"],
             )
-        if isinstance(self.channel, Channel):
+        elif isinstance(self.channel, Channel):
             pass
         else:
-            raise ValueError("item should be either dict or Channel instance")
+            self.channel = None
 
         items: List[Entry] = list()
         for item in self.items:

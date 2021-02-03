@@ -89,7 +89,7 @@ class Entry:
     link: str
     description: str
     author: str
-    time: datetime
+    time: Optional[datetime]
     safe_title: str
     safe_description: str
 ```

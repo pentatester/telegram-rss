@@ -1,7 +1,7 @@
 import attr
 from bs4 import BeautifulSoup
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 from telegram_rss.utils import sanitize_text, struct_time_to_datetime
 from . import Img
@@ -13,7 +13,7 @@ class Entry:
     link: str
     description: str
     author: str
-    time: datetime
+    time: Optional[datetime] = None
     imgs: List[Img] = attr.ib(factory=list)
 
     def __attrs_post_init__(self) -> None:
@@ -34,10 +34,11 @@ class Entry:
 
     @classmethod
     def from_dict(cls, item: dict) -> "Entry":
+        time = item.get('published_parsed')
         return cls(
             title=item["title"],
             link=item["link"],
             description=item["description"],
             author=item["author"],
-            time=struct_time_to_datetime(item["published_parsed"]),
+            time=struct_time_to_datetime(time) if time else None,
         )

@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 TEMPLATE_DATA = {
     "author": "Author",
     "source": "Source",
+    "published": "Published",
 }
 
 

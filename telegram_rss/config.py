@@ -22,6 +22,7 @@ class FeedConfig:
     name: str
     source: str
     save_bandwith: bool = True
+    notification: Optional[bool] = None
     etag: Optional[str] = None
     modified: Optional[str] = None
     web_page_preview: Optional[bool] = None
@@ -37,6 +38,7 @@ class FeedConfig:
 class Config:
     bot_token: str = ""
     env_token: str = "TOKEN"
+    notification: bool = True
     web_page_preview: bool = True
     message_delay: float = 0.05
     read_more_button: str = "Read more..."

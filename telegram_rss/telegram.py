@@ -36,6 +36,13 @@ def send_message(
         reply_markup = make_reply_markup(read_more, entry.link)
     else:
         reply_markup = None
+
+    notification = (
+        config.notification
+        if feed_config.notification is None
+        else feed_config.notification
+    )
+
     for chat_id in chat_ids:
         bot.send_message(
             chat_id,
@@ -43,6 +50,7 @@ def send_message(
             parse_mode=ParseMode.HTML,
             reply_markup=reply_markup,
             disable_web_page_preview=not web_page_preview,
+            disable_notification=not notification,
         )
         sleep(message_delay)
 

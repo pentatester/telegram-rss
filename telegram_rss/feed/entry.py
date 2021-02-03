@@ -44,6 +44,13 @@ class Entry:
     def safe_description(self) -> str:
         return sanitize_text(self.description)
 
+    @property
+    def clean_description(self) -> str:
+        # Thanks https://stackoverflow.com/a/17610612
+        return "\n".join(
+            [ll.rstrip() for ll in self.safe_description.splitlines() if ll.strip()]
+        )
+
     @classmethod
     def from_dict(cls, item: dict) -> "Entry":
         return cls(

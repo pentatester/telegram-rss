@@ -69,6 +69,8 @@ Default template is
 <i>{{ source }}</i>: <a href="{{ channel.link }}">{{ channel.safe_title }}</a>
 ```
 
+More about [objects in template](#template-objects)
+
 ## How to get token
 
 Just create a new bot account using [@BotFather](https://t.me/BotFather). **Don't forget to add the bot as channel's admin**
@@ -76,3 +78,29 @@ Just create a new bot account using [@BotFather](https://t.me/BotFather). **Don'
 ## How to get ids
 
 Send / forward a message (user or channel) to [@JsonDumpBot](https://t.me/JsonDumpBot)
+
+## Template objects
+
+### entry
+
+```python
+class Entry:
+    title: str
+    link: str
+    description: str
+    author: str
+    time: datetime
+    safe_title: str
+    safe_description: str
+```
+
+### channel
+
+```python
+class Channel:
+    title: str
+    link: str
+    description: str
+    safe_title: str
+    safe_description: str
+```

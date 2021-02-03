@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from typing import List
 
-from telegram_rss.utils import sanitize_text
+from telegram_rss.utils import sanitize_text, struct_time_to_datetime
 from . import Img
 
 
@@ -31,3 +31,13 @@ class Entry:
     @property
     def safe_description(self) -> str:
         return sanitize_text(self.description)
+
+    @classmethod
+    def from_dict(cls, item: dict) -> "Entry":
+        return cls(
+            title=item["title"],
+            link=item["link"],
+            description=item["description"],
+            author=item["author"],
+            time=struct_time_to_datetime(item["published_parsed"]),
+        )

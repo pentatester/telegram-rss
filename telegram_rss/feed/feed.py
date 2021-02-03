@@ -1,16 +1,9 @@
 import attr
 from collections import UserList
-from datetime import datetime
 from feedparser import FeedParserDict
-from time import mktime, struct_time
 from typing import List, MutableSequence, Optional
 
 from . import Entry, Channel
-
-
-def struct_time_to_datetime(struct: struct_time) -> datetime:
-    # Thank you! https://stackoverflow.com/a/1697907
-    return datetime.fromtimestamp(mktime(struct))
 
 
 @attr.dataclass
@@ -33,15 +26,7 @@ class Feed(MutableSequence[Entry]):
         items: List[Entry] = list()
         for item in self.items:
             if isinstance(item, dict):
-                items.append(
-                    Entry(
-                        title=item["title"],
-                        link=item["link"],
-                        description=item["description"],
-                        author=item["author"],
-                        time=struct_time_to_datetime(item["published_parsed"]),
-                    )
-                )
+                items.append(Entry.from_dict(item))
             elif isinstance(item, Entry):
                 items.append(item)
             else:

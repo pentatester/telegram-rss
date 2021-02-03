@@ -3,7 +3,9 @@ import os
 import json
 import toml
 from bleach import clean as clean_html
+from datetime import datetime
 from pathlib import Path
+from time import mktime, struct_time
 
 ALLOWED_TAGS = ["b", "i", "u", "s", "a", "code", "pre"]
 
@@ -45,3 +47,8 @@ def load_dict(filepath: str):
     else:
         raise ValueError(f"{filepath} should be *.json or *.toml")
     return data
+
+
+def struct_time_to_datetime(struct: struct_time) -> datetime:
+    # Thank you! https://stackoverflow.com/a/1697907
+    return datetime.fromtimestamp(mktime(struct))

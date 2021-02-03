@@ -89,6 +89,7 @@ class Entry:
     link: str
     description: str
     author: str
+    published: Optional[str]
     time: Optional[datetime]
     safe_title: str
     safe_description: str

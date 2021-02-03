@@ -1,9 +1,8 @@
 import attr
 from bs4 import BeautifulSoup
-from datetime import datetime
 from typing import List, Optional
 
-from telegram_rss.utils import sanitize_text, struct_time_to_datetime
+from telegram_rss.utils import sanitize_text
 from . import Img
 
 
@@ -13,16 +12,23 @@ class Entry:
     link: str
     description: str
     author: str
-    time: Optional[datetime] = None
-    imgs: List[Img] = attr.ib(factory=list)
+    published: Optional[str] = None
 
     def __attrs_post_init__(self) -> None:
-        soup = BeautifulSoup(self.description, "html.parser")
-        for img in soup.find_all("img"):
-            self.imgs.append(Img.from_tag(img))
+        self._imgs: Optional[List[Img]] = None
 
     def __str__(self):
         return self.t
+
+    @property
+    def imgs(self) -> List[Img]:
+        if self._imgs is not None:
+            return self._imgs
+        self._imgs = list()
+        soup = BeautifulSoup(self.description, "html.parser")
+        for img in soup.find_all("img"):
+            self._imgs.append(Img.from_tag(img))
+        return self._imgs
 
     @property
     def safe_title(self) -> str:
@@ -34,11 +40,10 @@ class Entry:
 
     @classmethod
     def from_dict(cls, item: dict) -> "Entry":
-        time = item.get('published_parsed')
         return cls(
             title=item["title"],
             link=item["link"],
             description=item["description"],
             author=item["author"],
-            time=struct_time_to_datetime(time) if time else None,
+            published=item.get("published"),
         )

@@ -18,3 +18,11 @@ class Channel:
     @property
     def safe_description(self) -> str:
         return sanitize_text(self.description)
+
+    @classmethod
+    def from_dict(cls, item: dict) -> "Channel":
+        return cls(
+            title=item["title"],
+            link=item["link"],
+            description=item["description"],
+        )

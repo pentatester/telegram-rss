@@ -13,11 +13,7 @@ class Feed(MutableSequence[Entry]):
 
     def __attrs_post_init__(self) -> None:
         if isinstance(self.channel, dict):
-            self.channel = Channel(
-                title=self.channel["title"],
-                link=self.channel["link"],
-                description=self.channel["description"],
-            )
+            self.channel = Channel.from_dict(self.channel)
         elif isinstance(self.channel, Channel):
             pass
         else:

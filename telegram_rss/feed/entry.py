@@ -18,13 +18,19 @@ class Entry:
 
     def __attrs_post_init__(self) -> None:
         self._imgs: Optional[List[Img]] = None
+        self._time: Optional[datetime] = None
 
     def __str__(self):
         return self.t
 
     @property
     def time(self) -> Optional[datetime]:
-        return parser.parse(self.published) if self.published else None
+        if self._time is not None:
+            return self._time
+        elif self.published is None:
+            return None
+        self._time = parser.parse(self.published) if self.published else None
+        return self._time
 
     @property
     def imgs(self) -> List[Img]:

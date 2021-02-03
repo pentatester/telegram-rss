@@ -1,5 +1,7 @@
 import attr
 from bs4 import BeautifulSoup
+from datetime import datetime
+from dateutil import parser
 from typing import List, Optional
 
 from telegram_rss.utils import sanitize_text
@@ -19,6 +21,10 @@ class Entry:
 
     def __str__(self):
         return self.t
+
+    @property
+    def time(self) -> Optional[datetime]:
+        return parser.parse(self.published) if self.published else None
 
     @property
     def imgs(self) -> List[Img]:

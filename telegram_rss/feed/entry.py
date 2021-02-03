@@ -1,4 +1,5 @@
 import attr
+from datetime import datetime
 from telegram_rss.utils import sanitize_text
 
 
@@ -8,6 +9,7 @@ class Entry:
     link: str
     description: str
     author: str
+    time: datetime
 
     def __str__(self):
         return self.t

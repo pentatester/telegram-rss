@@ -21,6 +21,7 @@ TEMPLATE_DATA = {
 class FeedConfig:
     name: str
     source: str
+    enable: bool = True
     save_bandwith: bool = True
     notification: Optional[bool] = None
     etag: Optional[str] = None

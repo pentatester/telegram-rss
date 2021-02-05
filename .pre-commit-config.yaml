@@ -19,7 +19,7 @@ repos:
         files: ^telegram_rss/.*\.py$
         args:
           - --errors-only
-          - --disable=import-error
+          - --disable=import-error,no-name-in-module
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: "v0.800"
     hooks:

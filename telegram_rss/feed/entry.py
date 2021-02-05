@@ -21,7 +21,7 @@ class Entry:
         self._time: Optional[datetime] = None
 
     def __str__(self):
-        return self.t
+        return self.safe_title
 
     @property
     def time(self) -> Optional[datetime]:

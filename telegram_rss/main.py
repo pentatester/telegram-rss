@@ -64,7 +64,7 @@ def polling(ctx: Context, debug: bool, token: Optional[str] = None):
 
 def main():
     config = Config.read()
-    sys.exit(cli(obj=config))
+    sys.exit(cli(obj=config))  # pylint: disable=E1123,E1120
 
 
 if __name__ == "__main__":

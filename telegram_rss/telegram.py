@@ -57,15 +57,19 @@ def send_message(
 
 def send_update(bot: Bot, config: Config):
     chat_ids = config.channels + config.users
+    logger.debug(f"Sending update to {chat_ids}")
     for feed_config in config.feeds:
         if not feed_config.enable:
+            logger.debug(f"{feed_config.name} feed disabled")
             continue
         message_delay = feed_config.message_delay or config.message_delay
         updater = FeedUpdater(feed_config)
         entries = updater.get_new_entries()
         if not entries:
+            logger.debug(f"New feeds not found for {feed_config.name}")
             continue
         entries.reverse()
+        logger.debug(f"Sending {len(entries)} feeds to {chat_ids}")
 
         for entry in entries:
             send_message(

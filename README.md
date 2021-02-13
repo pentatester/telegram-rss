@@ -32,6 +32,7 @@ bot_token = "987654321:ASDASDASD-1sda2eas3asd-91sdajh28j"
 env_token = "TOKEN"
 users = [ 123456789,]
 channels = [ -123456789,]
+groups = [ 1234567890,]
 web_page_preview = true
 message_delay = 0.05
 read_more_button = "Read more"
@@ -40,11 +41,14 @@ read_more_button = "Read more"
 name = "Feed example online"
 source = "http://feedparser.org/docs/examples/atom10.xml"
 footer_link = "http://feedparser.org/docs/"
+channels = [ -123456789,]
 
 [[feeds]]
 name = "Feed example local"
 source = "c:\\incoming\\atom10.xml"
 save_bandwith = false
+users = [ 987654321,]
+groups = [ 111111111,]
 footer = false
 
 [template_data]

@@ -23,6 +23,9 @@ def send_message(
     feed_config: FeedConfig,
     message_delay: float,
 ):
+    feed_chat_ids = feed_config.get_chat_ids()
+    feed_chat_ids.extend(chat_ids)
+    feed_chat_ids = list(set(feed_chat_ids))
     read_more = feed_config.read_more_button or config.read_more_button
     web_page_preview = feed_config.web_page_preview or config.web_page_preview
 
@@ -43,7 +46,7 @@ def send_message(
         else feed_config.notification
     )
 
-    for chat_id in chat_ids:
+    for chat_id in feed_chat_ids:
         bot.send_message(
             chat_id,
             text=message,
@@ -56,7 +59,7 @@ def send_message(
 
 
 def send_update(bot: Bot, config: Config):
-    chat_ids = config.channels + config.users
+    chat_ids = config.get_chat_ids()
     logger.debug(f"Sending update to {chat_ids}")
     for feed_config in config.feeds:
         if not feed_config.enable:

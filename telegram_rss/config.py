@@ -24,6 +24,8 @@ class FeedConfig:
     source: str
     enable: bool = True
     save_bandwith: bool = True
+    users: List[int] = attr.ib(factory=list)
+    channels: List[int] = attr.ib(factory=list)
     notification: Optional[bool] = None
     etag: Optional[str] = None
     modified: Optional[str] = None
@@ -34,6 +36,9 @@ class FeedConfig:
 
     def __str__(self):
         return self.name
+
+    def get_chat_ids(self) -> List[int]:
+        return self.users + self.channels
 
 
 @attr.dataclass
@@ -71,6 +76,9 @@ class Config:
             with open(self.template_file, "r") as f:
                 self._template = Template(f.read())
         logger.debug(f"Loaded config {self}")
+
+    def get_chat_ids(self) -> List[int]:
+        return self.users + self.channels
 
     @property
     def template(self) -> Template:

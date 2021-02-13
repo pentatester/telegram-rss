@@ -26,6 +26,7 @@ class FeedConfig:
     save_bandwith: bool = True
     users: List[int] = attr.ib(factory=list)
     channels: List[int] = attr.ib(factory=list)
+    groups: List[int] = attr.ib(factory=list)
     notification: Optional[bool] = None
     etag: Optional[str] = None
     modified: Optional[str] = None
@@ -38,7 +39,7 @@ class FeedConfig:
         return self.name
 
     def get_chat_ids(self) -> List[int]:
-        return self.users + self.channels
+        return self.users + self.channels + self.groups
 
 
 @attr.dataclass
@@ -55,6 +56,7 @@ class Config:
     template_data: dict = attr.ib(default=TEMPLATE_DATA)
     users: List[int] = attr.ib(factory=list)
     channels: List[int] = attr.ib(factory=list)
+    groups: List[int] = attr.ib(factory=list)
     feeds: List[FeedConfig] = attr.ib(factory=list)
 
     def __attrs_post_init__(self) -> None:
@@ -78,7 +80,7 @@ class Config:
         logger.debug(f"Loaded config {self}")
 
     def get_chat_ids(self) -> List[int]:
-        return self.users + self.channels
+        return self.users + self.channels + self.groups
 
     @property
     def template(self) -> Template:

@@ -43,11 +43,13 @@ name = "Feed example online"
 source = "http://feedparser.org/docs/examples/atom10.xml"
 footer_link = "http://feedparser.org/docs/"
 channels = [ -123456789,]
+only_today = true
 
 [[feeds]]
 name = "Feed example local"
 source = "c:\\incoming\\atom10.xml"
 save_bandwith = false
+only_today = false
 users = [ 987654321,]
 groups = [ 111111111,]
 footer = false
@@ -58,6 +60,7 @@ source = "Source"
 
 ```
 
+- Only send the feed if the date in the feed match today `only_today = true`.
 - Disable web preview in chat by `web_page_preview = false`.
 - If you don't want read_more_button under the message, set `read_more_button = ""`.
 - Don't set message_delay too low, it can be detected as spam.

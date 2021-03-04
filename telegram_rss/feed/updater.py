@@ -2,6 +2,7 @@ import attr
 import logging
 import os
 
+from datetime import datetime
 from feedparser import parse as parse_feed
 from typing import List, Optional
 
@@ -30,8 +31,12 @@ class FeedUpdater:
         if not self.feed or self.feed == self.local_feed:
             self.logger.info("No new feeds found")
             return entries
+        now = datetime.now()
         for feed in self.feed:
-            if feed not in self.local_feed:
+            if self.feed_config.only_today and feed.time:
+                if feed.time.date() == now.date():
+                    entries.append(feed)
+            elif feed not in self.local_feed:
                 entries.append(feed)
         self.logger.info(f"Found new {len(entries)} feeds")
         if entries and save:

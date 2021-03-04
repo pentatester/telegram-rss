@@ -24,6 +24,7 @@ class FeedConfig:
     source: str
     enable: bool = True
     save_bandwith: bool = True
+    only_today: bool = False
     users: List[int] = attr.ib(factory=list)
     channels: List[int] = attr.ib(factory=list)
     groups: List[int] = attr.ib(factory=list)

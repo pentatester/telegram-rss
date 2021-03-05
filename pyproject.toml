@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "telegram-rss"
-version = "0.8.0"
+version = "0.8.1"
 license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/pentatester/telegram-rss"

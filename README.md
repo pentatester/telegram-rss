@@ -60,7 +60,7 @@ source = "Source"
 
 ```
 
-- Only send the feed if the date in the feed match today `only_today = true`.
+- Send feed if published today (when we checked) `only_today = true`.
 - Disable web preview in chat by `web_page_preview = false`.
 - If you don't want read_more_button under the message, set `read_more_button = ""`.
 - Don't set message_delay too low, it can be detected as spam.

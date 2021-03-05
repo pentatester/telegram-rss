@@ -31,13 +31,25 @@ class FeedUpdater:
         if not self.feed or self.feed == self.local_feed:
             self.logger.info("No new feeds found")
             return entries
-        now = datetime.now()
         for feed in self.feed:
-            if self.feed_config.only_today and feed.time:
-                if feed.time.date() == now.date():
-                    entries.append(feed)
-            elif feed not in self.local_feed:
+            if feed in entries:
+                continue
+            if feed not in self.local_feed:
                 entries.append(feed)
+        if not entries:
+            self.logger.debug("All feeds aleady in local_feeds")
+            return entries
+        if self.feed_config.only_today:
+            self.logger.debug("Filter feeds published only today")
+            now = datetime.now()
+            for i in range(len(entries)):
+                entry = entries[i]
+                if not entry.time:
+                    continue
+                if entry.time.date() == now.date():
+                    continue
+                else:
+                    del entries[i]
         self.logger.info(f"Found new {len(entries)} feeds")
         if entries and save:
             self.save_feed(self.feed)
